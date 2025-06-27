@@ -30,14 +30,13 @@ api
     "currency": "USDC",
     "type": "social-network",
     "sender_username": "x402-axios",
-    "receiver_username": "MurrLincoln",
-    "receiver_identity": "twitter",
+    "receiver_username": "jrsarath",
+    "receiver_identity": "farcaster",
    })
   .then(response => {
     // console.log('response', response.data);
-
     const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
-    // console.log(paymentResponse);
+    console.log(paymentResponse);
   })
   .catch(error => {
     // console.error('headers', error.response?.headers);
