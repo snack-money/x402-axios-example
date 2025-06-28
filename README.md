@@ -5,31 +5,29 @@ This is an example client that demonstrates how to use the `x402-axios` package 
 ## Prerequisites
 
 - Node.js v20+ (install via [nvm](https://github.com/nvm-sh/nvm))
-- pnpm v10 (install via [pnpm.io/installation](https://pnpm.io/installation))
-- A running x402 server (you can use the example express server at `examples/typescript/servers/express`)
+- yarn v1
+- A running x402 server
 - A valid Ethereum private key for making payments
 
 ## Setup
-
-1. Install and build all packages from the typescript examples root:
+1. Clone the repo
+2. Install Dependencies:
 ```bash
-cd ../../
-pnpm install
-pnpm build
-cd clients/axios
+cd x402-axios-example
+yarn install
 ```
 
-2. Copy `.env-local` to `.env` and add your Ethereum private key (remember it should have USDC on Base Sepolia, which you can provision using the [CDP Faucet](https://portal.cdp.coinbase.com/products/faucet)):
+3. Copy `.env-local` to `.env` and add your Ethereum private key (remember it should have USDC on Base Sepolia, which you can provision using the [CDP Faucet](https://portal.cdp.coinbase.com/products/faucet)):
 ```bash
 cp .env-local .env
 ```
 
-3. Start the example client (remember you need to be running a server locally or point at an endpoint):
+4. Start the example client (remember you need to be running a server locally or point at an endpoint):
 ```bash
-pnpm run pay
+yarn run pay
 ```
 ```bash
-pnpm run batch-pay
+yarn run batch-pay
 ```
 
 ## How It Works
