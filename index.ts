@@ -26,18 +26,15 @@ const api = withPaymentInterceptor(
 
 api
   .post(endpointPath, { 
+    "amount": 0.5,
     "currency": "USDC",
     "type": "social-network",
-    "sender_username": "x402-axios",
-    "receivers": [
-      {
-        "username": "jrsarath",
-        "amount": "farcaster",
-      }
-    ]
+    "sender_username": "iamdelta48",
+    "receiver_username": "jrsarath",
+    "receiver_identity": "farcaster",
    })
   .then(response => {
-    // console.log('response', response.data);
+    console.log('response', response.data);
     const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
     console.log(paymentResponse);
   })
