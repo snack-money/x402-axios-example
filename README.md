@@ -1,12 +1,11 @@
-# x402-axios Example Client
+# Snack Money API x402 example
 
-This is an example client that demonstrates how to use the `x402-axios` package to make HTTP requests to endpoints protected by the x402 payment protocol.
+This is an example client that demonstrates how to use the Snack Money API to send USDC to any X and Farcaster account without requiring wallet address.
 
 ## Prerequisites
 
 - Node.js v20+ (install via [nvm](https://github.com/nvm-sh/nvm))
 - yarn v1
-- A running x402 server
 - A valid Ethereum private key for making payments
 
 ## Setup
@@ -30,52 +29,25 @@ yarn run pay
 yarn run batch-pay
 ```
 
-## How It Works
+# x402-axios-example
 
-The example demonstrates how to:
-1. Create a wallet client using viem
-2. Create an Axios instance with x402 payment handling
-3. Make a request to a paid endpoint
-4. Handle the response or any errors
+## Usage
 
-## Example Code
+You can run the payment script with the following command:
 
-```typescript
-import { config } from "dotenv";
-import { createWalletClient, http, publicActions } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { withPaymentInterceptor } from "x402-axios";
-import axios from "axios";
-import { baseSepolia } from "viem/chains";
-
-config();
-
-const { RESOURCE_SERVER_URL, PRIVATE_KEY, ENDPOINT_PATH } = process.env;
-
-// Create wallet client
-const account = privateKeyToAccount(PRIVATE_KEY as "0x${string}");
-const client = createWalletClient({
-  account,
-  transport: http(),
-  chain: baseSepolia,
-}).extend(publicActions);
-
-// Create Axios instance with payment handling
-const api = withPaymentInterceptor(
-  axios.create({
-    baseURL: RESOURCE_SERVER_URL,
-  }),
-  client
-);
-
-// Make request to paid endpoint
-api
-  .get(ENDPOINT_PATH)
-  .then(response => {
-    console.log(response.headers);
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error(error.response?.data?.error);
-  });
+```sh
+yarn run pay <receiver_identity> <receiver_username> <$amount>
 ```
+
+- `<receiver_identity>`: The identity type (e.g., `farcaster`, `twitter`)
+- `<receiver_username>`: The username of the receiver (e.g., `0xmesuthere`)
+- `<$amount>`: The amount to send, prefixed with `$` (e.g., `$0.01`). The `$` is optional.
+
+**Examples:**
+
+```sh
+yarn run pay twitter 0xmesuthere 0.01
+yarn run pay farcaster mesut 0.01
+```
+
+The script will parse the arguments and send the payment accordingly.
