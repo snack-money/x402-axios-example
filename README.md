@@ -26,7 +26,10 @@ cp .env-local .env
 
 3. Start the example client (remember you need to be running a server locally or point at an endpoint):
 ```bash
-pnpm dev
+pnpm run pay
+```
+```bash
+pnpm run batch-pay
 ```
 
 ## How It Works

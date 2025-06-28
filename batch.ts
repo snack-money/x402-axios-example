@@ -39,7 +39,7 @@ api
     ],
    })
   .then(response => {
-    // console.log('response', response.data);
+    console.log('response', response.data);
     const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
     console.log(paymentResponse);
   })

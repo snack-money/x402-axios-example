@@ -26,12 +26,15 @@ const api = withPaymentInterceptor(
 
 api
   .post(endpointPath, { 
-    "amount": 0.07,
     "currency": "USDC",
     "type": "social-network",
     "sender_username": "x402-axios",
-    "receiver_username": "jrsarath",
-    "receiver_identity": "farcaster",
+    "receivers": [
+      {
+        "username": "jrsarath",
+        "amount": "farcaster",
+      }
+    ]
    })
   .then(response => {
     // console.log('response', response.data);
