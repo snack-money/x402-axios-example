@@ -8,7 +8,7 @@ config();
 
 const privateKey = process.env.PRIVATE_KEY as Hex;
 const baseURL = process.env.RESOURCE_SERVER_URL as string; // e.g. https://api.snack.money
-const endpointPath = process.env.ENDPOINT_PATH as string; // e.g. /pay
+const endpointPath = process.env.BATCH_ENDPOINT_PATH as string; // e.g. /pay
 
 if (!baseURL || !privateKey || !endpointPath) {
   console.error("Missing required environment variables");
@@ -29,15 +29,17 @@ api
     "currency": "USDC",
     "type": "social-network",
     "sender_username": "x402-axios",
+    "receiver_identity": "farcaster",
     "receivers": [
       {
         "username": "jrsarath",
-        "amount": "farcaster",
+        "name": "Sarath Singh",
+        "amount": 0.5
       }
-    ]
+    ],
    })
   .then(response => {
-    // console.log('response', response.data);
+    console.log('response', response.data);
     const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
     console.log(paymentResponse);
   })
