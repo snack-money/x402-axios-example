@@ -60,7 +60,8 @@ yarn run batch-pay <receiver_identity> '<receivers_json>'
 **Example:**
 
 ```sh
-yarn run batch-pay farcaster '[{"username":"jrsarath","name":"Sarath Singh","amount":0.5},{"username":"mesut","name":"Mesut Celik","amount":0.25}]'
+yarn run batch-pay farcaster '[{"username":"lincoln","amount":0.5},{"username":"mesut","amount":0.25}]'
+yarn run batch-pay twitter '[{"username":"MurrLincoln","amount":0.5},{"username":"0xmesuthere","amount":0.25}]'
 ```
 
 The script will validate the identity and receivers, then send the batch payment accordingly.
