@@ -24,19 +24,40 @@ const api = withPaymentInterceptor(
   account,
 );
 
+// Get command line arguments
+const [, , receiver_identity, receiversInput] = process.argv;
+
+if (!receiver_identity || !receiversInput) {
+  console.error("Usage: yarn run batch-pay <receiver_identity> <receivers_json>");
+  process.exit(1);
+}
+
+// Validate receiver_identity
+const allowedIdentities = ["twitter", "farcaster"];
+if (!allowedIdentities.includes(receiver_identity.toLowerCase())) {
+  console.error("receiver_identity must be either 'twitter' or 'farcaster'");
+  process.exit(1);
+}
+
+// Parse receivers JSON
+let receivers;
+try {
+  receivers = JSON.parse(receiversInput);
+  if (!Array.isArray(receivers)) {
+    throw new Error("Receivers must be an array");
+  }
+} catch (e) {
+  console.error("receivers must be a valid JSON array, e.g. '[{\"username\":\"jrsarath\",\"name\":\"Sarath Singh\",\"amount\":0.5}]'");
+  process.exit(1);
+}
+
 api
   .post(endpointPath, { 
-    "currency": "USDC",
-    "type": "social-network",
-    "sender_username": "x402-axios",
-    "receiver_identity": "farcaster",
-    "receivers": [
-      {
-        "username": "jrsarath",
-        "name": "Sarath Singh",
-        "amount": 0.5
-      }
-    ],
+    currency: "USDC",
+    type: "social-network",
+    sender_username: "snackmoney-agent-x402",
+    receiver_identity,
+    receivers,
    })
   .then(response => {
     console.log('response', response.data);
@@ -44,7 +65,5 @@ api
     console.log(paymentResponse);
   })
   .catch(error => {
-    // console.error('headers', error.response?.headers);
-    // console.error('data', error.response?.data);
     console.error('error', error);
   });

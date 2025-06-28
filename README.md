@@ -28,12 +28,12 @@ cp .env-local .env
 You can run the payment script with the following command:
 
 ```sh
-yarn run pay <receiver_identity> <receiver_username> <$amount>
+yarn run pay <receiver_identity> <receiver_username> <amount>
 ```
 
-- `<receiver_identity>`: The identity type (e.g., `farcaster`, `twitter`)
+- `<receiver_identity>`: The identity type (`farcaster` or `twitter`)
 - `<receiver_username>`: The username of the receiver (e.g., `0xmesuthere`)
-- `<$amount>`: The amount to send, prefixed with `$` (e.g., `$0.01`). The `$` is optional.
+- `<amount>`: The amount to send (e.g., `0.01`)
 
 **Examples:**
 
@@ -43,3 +43,24 @@ yarn run pay farcaster mesut 0.01
 ```
 
 The script will parse the arguments and send the payment accordingly.
+
+# Snack Money Batch Payment Example
+
+## Usage
+
+You can run the batch payment script with the following command:
+
+```sh
+yarn run batch-pay <receiver_identity> '<receivers_json>'
+```
+
+- `<receiver_identity>`: The identity type (`farcaster` or `twitter`)
+- `<receivers_json>`: A JSON array of receiver objects, each with `username`, `name`, and `amount` fields.
+
+**Example:**
+
+```sh
+yarn run batch-pay farcaster '[{"username":"jrsarath","name":"Sarath Singh","amount":0.5},{"username":"mesut","name":"Mesut Celik","amount":0.25}]'
+```
+
+The script will validate the identity and receivers, then send the batch payment accordingly.
