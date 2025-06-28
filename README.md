@@ -16,20 +16,12 @@ cd x402-axios-example
 yarn install
 ```
 
-3. Copy `.env-local` to `.env` and add your Ethereum private key (remember it should have USDC on Base Sepolia, which you can provision using the [CDP Faucet](https://portal.cdp.coinbase.com/products/faucet)):
+3. Copy `.env-local` to `.env` and add your Ethereum private key 
 ```bash
 cp .env-local .env
 ```
 
-4. Start the example client (remember you need to be running a server locally or point at an endpoint):
-```bash
-yarn run pay
-```
-```bash
-yarn run batch-pay
-```
-
-# x402-axios-example
+# Snack Money Single Account Payment Example
 
 ## Usage
 
