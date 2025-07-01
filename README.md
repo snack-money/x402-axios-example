@@ -29,6 +29,12 @@ yarn run pay
 ```bash
 yarn run batch-pay
 ```
+```bash
+yarn run create_reward_distribution
+```
+```bash
+yarn run confirm_reward_distribution
+```
 
 ## How It Works
 
