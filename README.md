@@ -1,12 +1,11 @@
-# x402-axios Example Client
+# Snack Money API x402 example
 
-This is an example client that demonstrates how to use the `x402-axios` package to make HTTP requests to endpoints protected by the x402 payment protocol.
+This is an example client that demonstrates how to use the Snack Money API to send USDC to any X and Farcaster account without requiring wallet address.
 
 ## Prerequisites
 
 - Node.js v20+ (install via [nvm](https://github.com/nvm-sh/nvm))
 - yarn v1
-- A running x402 server
 - A valid Ethereum private key for making payments
 
 ## Setup
@@ -17,17 +16,19 @@ cd x402-axios-example
 yarn install
 ```
 
-3. Copy `.env-local` to `.env` and add your Ethereum private key (remember it should have USDC on Base Sepolia, which you can provision using the [CDP Faucet](https://portal.cdp.coinbase.com/products/faucet)):
+3. Copy `.env-local` to `.env` and add your Ethereum private key 
 ```bash
 cp .env-local .env
 ```
 
-4. Start the example client (remember you need to be running a server locally or point at an endpoint):
-```bash
-yarn run pay
-```
-```bash
-yarn run batch-pay
+# Snack Money Single Account Payment Example
+
+## Usage
+
+You can run the payment script with the following command:
+
+```sh
+yarn run pay <receiver_identity> <receiver_username> <amount>
 ```
 ```bash
 yarn run create_reward_distribution
@@ -36,52 +37,37 @@ yarn run create_reward_distribution
 yarn run confirm_reward_distribution
 ```
 
-## How It Works
+- `<receiver_identity>`: The identity type (`farcaster` or `twitter`)
+- `<receiver_username>`: The username of the receiver (e.g., `0xmesuthere`)
+- `<amount>`: The amount to send (e.g., `0.01`)
 
-The example demonstrates how to:
-1. Create a wallet client using viem
-2. Create an Axios instance with x402 payment handling
-3. Make a request to a paid endpoint
-4. Handle the response or any errors
+**Examples:**
 
-## Example Code
-
-```typescript
-import { config } from "dotenv";
-import { createWalletClient, http, publicActions } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { withPaymentInterceptor } from "x402-axios";
-import axios from "axios";
-import { baseSepolia } from "viem/chains";
-
-config();
-
-const { RESOURCE_SERVER_URL, PRIVATE_KEY, ENDPOINT_PATH } = process.env;
-
-// Create wallet client
-const account = privateKeyToAccount(PRIVATE_KEY as "0x${string}");
-const client = createWalletClient({
-  account,
-  transport: http(),
-  chain: baseSepolia,
-}).extend(publicActions);
-
-// Create Axios instance with payment handling
-const api = withPaymentInterceptor(
-  axios.create({
-    baseURL: RESOURCE_SERVER_URL,
-  }),
-  client
-);
-
-// Make request to paid endpoint
-api
-  .get(ENDPOINT_PATH)
-  .then(response => {
-    console.log(response.headers);
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error(error.response?.data?.error);
-  });
+```sh
+yarn run pay twitter 0xmesuthere 0.01
+yarn run pay farcaster mesut 0.01
 ```
+
+The script will parse the arguments and send the payment accordingly.
+
+# Snack Money Batch Payment Example
+
+## Usage
+
+You can run the batch payment script with the following command:
+
+```sh
+yarn run batch-pay <receiver_identity> '<receivers_json>'
+```
+
+- `<receiver_identity>`: The identity type (`farcaster` or `twitter`)
+- `<receivers_json>`: A JSON array of receiver objects, each with `username`, `name`, and `amount` fields.
+
+**Example:**
+
+```sh
+yarn run batch-pay farcaster '[{"username":"lincoln","amount":0.5},{"username":"mesut","amount":0.25}]'
+yarn run batch-pay twitter '[{"username":"MurrLincoln","amount":0.5},{"username":"0xmesuthere","amount":0.25}]'
+```
+
+The script will validate the identity and receivers, then send the batch payment accordingly.
