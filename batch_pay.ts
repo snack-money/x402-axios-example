@@ -1,3 +1,4 @@
+import minimist from "minimist";
 import axios from "axios";
 import { config } from "dotenv";
 import { Hex } from "viem";
@@ -7,34 +8,22 @@ import { withPaymentInterceptor, decodeXPaymentResponse } from "x402-axios";
 config();
 
 const privateKey = process.env.PRIVATE_KEY as Hex;
-const baseURL = process.env.RESOURCE_SERVER_URL as string; // e.g. https://api.snack.money
-const endpointPath = process.env.BATCH_ENDPOINT_PATH as string; // e.g. /pay
-
+const baseURL = process.env.RESOURCE_SERVER_URL as string;
+const endpointPath = process.env.BATCH_ENDPOINT_PATH as string;
 if (!baseURL || !privateKey || !endpointPath) {
   console.error("Missing required environment variables");
   process.exit(1);
 }
 
-const account = privateKeyToAccount(privateKey);
-
-const api = withPaymentInterceptor(
-  axios.create({
-    baseURL,
-  }),
-  account,
-);
-
-// Get command line arguments
-const [, , receiver_identity, receiversInput] = process.argv;
-
-if (!receiver_identity || !receiversInput) {
-  console.error("Usage: yarn run batch-pay <receiver_identity> <receivers_json>");
+const args = minimist(process.argv.slice(2));
+if (!args.receiver_identity || !args.receivers) {
+  console.error("Usage: yarn batch-pay --receiver_identity <receiver_identity> --receivers <receivers_json>");
   process.exit(1);
 }
 
-// Validate receiver_identity
+// Input validations
 const allowedIdentities = ["twitter", "farcaster"];
-if (!allowedIdentities.includes(receiver_identity.toLowerCase())) {
+if (!allowedIdentities.includes(args.receiver_identity.toLowerCase())) {
   console.error("receiver_identity must be either 'twitter' or 'farcaster'");
   process.exit(1);
 }
@@ -42,7 +31,7 @@ if (!allowedIdentities.includes(receiver_identity.toLowerCase())) {
 // Parse receivers JSON
 let receivers;
 try {
-  receivers = JSON.parse(receiversInput);
+  receivers = JSON.parse(args.receivers);
   if (!Array.isArray(receivers)) {
     throw new Error("Receivers must be an array");
   }
@@ -51,12 +40,19 @@ try {
   process.exit(1);
 }
 
+const account = privateKeyToAccount(privateKey);
+const api = withPaymentInterceptor(
+  axios.create({ baseURL }),
+  account,
+);
+
+
 api
   .post(endpointPath, { 
     currency: "USDC",
     type: "social-network",
     sender_username: "snackmoney-agent-x402",
-    receiver_identity,
+    receiver_identity: args.receiver_identity,
     receivers,
    })
   .then(response => {
