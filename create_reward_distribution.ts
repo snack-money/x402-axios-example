@@ -15,7 +15,9 @@ if (!baseURL || !privateKey || !endpointPath) {
   process.exit(1);
 }
 
-const args = minimist(process.argv.slice(2));
+const args = minimist(process.argv.slice(2), {
+  string: ['content_id', 'platform', 'budget'],
+});
 if (!args.budget || !args.platform || !args.content_id) {
   console.error("Usage: yarn create_reward_distribution --budget <budget> --platform <platform> --content_id <content_id>");
   process.exit(1);
@@ -27,6 +29,11 @@ if (!allowedIdentities.includes(args.platform.toLowerCase())) {
   console.error("platform must be either 'twitter' or 'farcaster'");
   process.exit(1);
 }
+const budget = parseFloat(args.budget);
+if (isNaN(budget)) {
+  console.error("budget must be a valid number, e.g., 0.01");
+  process.exit(1);
+}
 
 const account = privateKeyToAccount(privateKey);
 const api = withPaymentInterceptor(
@@ -36,7 +43,7 @@ const api = withPaymentInterceptor(
 
 api
   .post(endpointPath, {
-    "budget": parseFloat(args.budget),
+    "budget": budget,
     "platform": args.platform,
     "content_id": args.content_id.toString()
 })
