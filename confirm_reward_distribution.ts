@@ -30,9 +30,9 @@ const api = withPaymentInterceptor(
 api
   .post(`${endpointPath}/${args.order_id.toString()}`)
   .then(response => {
-    const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
-    console.log(paymentResponse);
-    console.log('response', response.data);
+    // const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
+    // console.log(paymentResponse);
+    console.log('response', JSON.stringify(response.data, null, 2));
   })
   .catch(error => {
     console.error('error', error);
