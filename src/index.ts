@@ -62,7 +62,7 @@ snackmoney
     }
 
     if (!isArgs) {
-      Logger.log("snackmoney --help");
+      Logger.info("snackmoney --help");
     }
     process.exit(0);
   });

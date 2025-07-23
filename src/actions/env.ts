@@ -16,11 +16,15 @@ export async function envAction() {
       name: "privateKey",
       type: "password",
       message: "Enter your Ethereum PRIVATE_KEY:",
-      mask: "*", // ✅ target dist/.env after build
-      validate: (input) =>
-        /^0x[0-9a-fA-F]{64}$/.test(input)
-          ? true
-          : "Must be a valid 0x-prefixed private key",
+      mask: "*",
+      validate: (input) => {
+        const isValid = /^0x[0-9a-fA-F]{64}$/.test(input);
+        if (!isValid) {
+          Logger.error("Must be a valid 0x-prefixed private key");
+          return "Invalid private key format.";
+        }
+        return true;
+      },
     },
   ]);
 

@@ -1,109 +1,111 @@
-# 🍪 Snack Money API – x402 Example
+# 🍪 Snackmoney CLI
 
-This repository contains example scripts that demonstrate how to use the **Snack Money API** to send **USDC** to any **Farcaster** or **Twitter** user — no wallet address required, thanks to the **x402 protocol**.
+Send USDC payments and rewards to users on platforms like Twitter and Farcaster — all from your terminal.
 
+---
 
-## Prerequisites
-* **Node.js v20+** (Install via [nvm](https://github.com/nvm-sh/nvm))
-* **Yarn v1**
-* An **Ethereum private key** to sign and send transactions
+## Smart Suggestions
 
+If you mistype a command, Snackmoney will suggest the correct one:
+
+```bash
+snackmoney pey
+# → Unknown command 'pey', Did you mean 'pay'?
+```
+
+---
+
+## Installation
+
+### Option 1: Run with `npx` (No install needed)
+
+```bash
+npx snackmoney <command> [options]
+```
+
+---
+
+### Option 2: Install globally with `npm`
+
+```bash
+npm install -g snackmoney
+snackmoney <command> [options]
+```
+
+---
+
+### Option 3: Install with Homebrew (macOS/Linux)
+
+```bash
+brew tap your-org/snackmoney
+brew install snackmoney
+snackmoney <command> [options]
+```
+
+## Help
+
+To see all available commands:
+
+```bash
+snackmoney --help
+```
+
+To check the version:
+
+```bash
+snackmoney --version
+```
+
+---
 
 ## Setup
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/snack-money/x402-axios-example.git
-   cd x402-axios-example
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   yarn install
-   ```
-
-3. **Configure environment variables**:
-   ```bash
-   cp .env-local .env
-   ```
-
-   * Edit `.env` and add your **Ethereum private key**.
-
-
-# Single Account Payment
-
-### Usage
-Send USDC to a single user via Twitter or Farcaster:
+Securely store your private key to `.env`:
 
 ```bash
-yarn pay --receiver_identity <identity_type> --receiver_username <receiver_username> --amount <amount>
+snackmoney env
 ```
 
-* `<identity_type>`: Either `farcaster` or `twitter`
-* `<receiver_username>`: Receiver’s username (e.g., `0xmesuthere`, `mesut`)
-* `<amount>`: Amount of USDC to send (e.g., `0.01`)
+---
 
-### Examples
-```bash
-yarn pay --receiver_identity twitter --receiver_username 0xmesuthere --amount 0.01
-yarn pay --receiver_identity farcaster--receiver_username mesut --amount 0.01
-```
+## Commands
 
-# Batch Payments
+### `pay`
 
-### Usage
-Send USDC to multiple recipients in a single batch:
+Send USDC to a **single** user.
 
 ```bash
-yarn batch-pay --receiver_identity <identity_type> --receivers '<receivers_json>'
+snackmoney pay -i twitter -u alice -a 10
 ```
 
-* `<identity_type>`: `farcaster` or `twitter`
-* `<receivers_json>`: A **JSON array** of recipients containing `username` and `amount`
+---
 
-### Examples
+### `batch-pay`
+
+Send USDC to **multiple** users with a JSON string:
 
 ```bash
-yarn batch-pay --receiver_identity farcaster --receivers '[{"username":"lincoln","amount":0.5},{"username":"mesut","amount":0.25}]'
-
-yarn batch-pay --receiver_identity twitter --receivers '[{"username":"MurrLincoln","amount":0.5},{"username":"0xmesuthere","amount":0.25}]'
+snackmoney batch-pay -i farcaster -r '[{"username":"bob","amount":15},{"username":"carol","amount":20}]'
 ```
 
-# Reward Distribution Creation
+---
 
-### Usage
-Create a reward distribution order with reward budget:
+### `create-reward-distribution`
+
+Create a reward distribution order for content.
 
 ```bash
-yarn create-reward-distribution --budget <budget> --platform <platform> --content_id <content_id>
+snackmoney create-reward-distribution -b 100 -p twitter -c 1234567890
 ```
 
-* `<budget>`: Amount of USDC to send (e.g., `10`)
-* `<platform>`: `farcaster` or `twitter`
-* `<content_id>`: The platform-provided **Content ID** associated with the content eligible for reward distribution.
+---
 
-### Examples
-```bash
-yarn create-reward-distribution --budget 10 --platform farcaster --content_id 0xb87cf233790dd2d8a3ed9549f9e15069c02b1da0
-```
+### `confirm-reward-distribution`
 
-# Reward Distribution Confirmation
-
-### Usage
-Confirms and distributes reward budget among participants:
+Confirm and execute the reward distribution.
 
 ```bash
-yarn confirm-reward-distribution --order_id <order_id>
+snackmoney confirm-reward-distribution -o order_abc123
 ```
 
-* `<order_id>`: An **Order Id** obtained from reward distribution creation
-
-### Examples
-```bash
-yarn confirm-reward-distribution --order_id x987ASCbjHk
-```
-
-## Notes
-* The identity type must match the platform the user is on.
-* Ensure your private key is secure and funded with sufficient USDC.
-
+---
