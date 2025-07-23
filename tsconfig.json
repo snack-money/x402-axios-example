@@ -8,8 +8,11 @@
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true,
+    "types": ["node"],
     "baseUrl": ".",
-    "types": ["node"]
+    "rootDir": "./",
+    "outDir": "./dist"
   },
-  "include": ["index.ts"]
+  "include": ["bin/**/*", "src/**/*", ".env"],
+  "exclude": ["node_modules", "dist", "coverage", "scripts", "tests", "brew"]
 }

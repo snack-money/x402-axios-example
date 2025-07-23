@@ -1,25 +1,67 @@
 {
-  "name": "axios-client-example",
-  "private": true,
+  "name": "snackmoney",
   "type": "module",
+  "license": "MIT",
+  "version": "0.0.1",
+  "author": "Snack Money Team",
+  "description": "A CLI tool for sending USDC payments on Twitter and Farcaster using x402.",
+  "bin": {
+    "snackmoney": "./dist/cjs/index.cjs"
+  },
+  "pkg": {
+    "scripts": "dist/cjs/index.cjs",
+    "assets": [
+      "dist/.env",
+      "node_modules/**/*"
+    ],
+    "targets": [
+      "node18-linux-x64",
+      "node18-macos-x64"
+    ],
+    "outputPath": "brew"
+  },
+  "module": "./dist/cjs/index.cjs",
+  "types": "./dist/esm/index.d.ts",
+  "main": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "cli",
+    "x402",
+    "usdc",
+    "twitter",
+    "farcaster",
+    "snackmoney"
+  ],
   "scripts": {
-    "pay": "tsx pay.ts",
-    "batch-pay": "tsx batch_pay.ts",
-    "create-reward-distribution": "tsx create_reward_distribution",
-    "confirm-reward-distribution": "tsx confirm_reward_distribution",
+    "pay": "tsx scripts/pay.ts",
+    "batch-pay": "tsx scripts/batch_pay.ts",
+    "semantic-release": "semantic-release",
+    "create-reward-distribution": "tsx scripts/create_reward_distribution",
+    "confirm-reward-distribution": "tsx scripts/confirm_reward_distribution",
     "format": "prettier -c .prettierrc --write \"**/*.{ts,js,cjs,json,md}\"",
     "format:check": "prettier -c .prettierrc --check \"**/*.{ts,js,cjs,json,md}\"",
     "lint": "eslint . --ext .ts --fix",
+    "build": "tsup",
     "lint:check": "eslint . --ext .ts"
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "commander": "^14.0.0",
     "dotenv": "^16.5.0",
-    "viem": "^2.23.1",
+    "inquirer": "^12.8.2",
+    "viem": "^2.33.0",
     "x402-axios": "latest"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/npm": "^12.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.2",
+    "@types/gradient-string": "^1.1.6",
     "@types/minimist": "^1.2.5",
     "@types/node": "^24.0.12",
     "@typescript-eslint/eslint-plugin": "^8.29.1",
@@ -28,8 +70,12 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsdoc": "^50.6.9",
     "eslint-plugin-prettier": "^5.2.6",
+    "kleur": "^4.1.5",
     "minimist": "^1.2.8",
+    "pkg": "^5.8.1",
     "prettier": "3.5.2",
+    "sementic-release": "^1.5.1",
+    "tsup": "^8.5.0",
     "tsx": "^4.7.0",
     "typescript": "^5.3.0"
   },
