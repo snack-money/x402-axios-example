@@ -1,9 +1,9 @@
 {
-    "amount": 0.01,
-    "currency": "USDC",
-    "type": "social-network",
-    "sender_username": "agent-mesut",
-    "receiver_username": "0xmesuthere",
-    "receiver_name": "Sarath Singh",
-    "receiver_identity": "twitter"
+  "amount": 0.01,
+  "currency": "USDC",
+  "type": "social-network",
+  "sender_username": "agent-mesut",
+  "receiver_username": "0xmesuthere",
+  "receiver_name": "Sarath Singh",
+  "receiver_identity": "twitter"
 }

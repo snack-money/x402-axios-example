@@ -1,3 +1,4 @@
+import fs from "fs";
 import kleur from "kleur";
 import dotenv from "dotenv";
 import { Command } from "commander";
@@ -19,9 +20,22 @@ import type { CommandName } from "./types";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const localEnvPath = path.resolve(__dirname, "../.env");
 
-dotenv.config({ path: localEnvPath });
+const localEnvPath = path.resolve(__dirname, "../.env");
+const fallbackEnvPath = path.resolve(process.cwd(), ".env");
+
+const envPathToUse = fs.existsSync(localEnvPath)
+  ? localEnvPath
+  : fs.existsSync(fallbackEnvPath)
+    ? fallbackEnvPath
+    : null;
+
+if (envPathToUse) {
+  dotenv.config({ path: envPathToUse });
+  Logger.info(`Loaded .env from ${envPathToUse}`);
+} else {
+  Logger.warn("⚠️ No .env file found, some commands may not work properly.");
+}
 
 const commandList: CommandName[] = [
   "pay",

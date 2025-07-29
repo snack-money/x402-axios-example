@@ -1,9 +1,8 @@
 import { defineConfig } from "tsup";
-import { cp } from "fs/promises";
 
 export default defineConfig([
   {
-    entry: ["src/index.ts"],
+    entry: ["src/index.ts", "src/main.ts"],
     format: ["esm"],
     outDir: "dist/esm",
     clean: true,
@@ -28,13 +27,5 @@ export default defineConfig([
     target: "esnext",
     treeshake: true,
     tsconfig: "tsconfig.json",
-    onSuccess: async () => {
-      try {
-        await cp(".env", "dist/.env", { force: true });
-        console.log("✅ .env copied to dist/");
-      } catch {
-        console.warn("⚠️  .env not found.");
-      }
-    },
   },
 ]);

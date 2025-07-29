@@ -20,9 +20,9 @@
     ],
     "outputPath": "brew"
   },
-  "module": "./dist/cjs/index.cjs",
-  "types": "./dist/esm/index.d.ts",
-  "main": "dist/esm/index.js",
+  "module": "./dist/esm/main.js",
+  "types": "./dist/esm/main.d.ts",
+  "main": "dist/esm/main.js",
   "files": [
     "dist"
   ],

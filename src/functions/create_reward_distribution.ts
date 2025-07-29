@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { Hex } from "viem";
-import type { Command } from "commander";
 import { privateKeyToAccount } from "viem/accounts";
 import { withPaymentInterceptor } from "x402-axios";
 import type { CreateRewardOptions } from "../types";
@@ -12,7 +11,7 @@ import { Logger } from "../helper/logger";
  * @description -  Creates a reward distribution order on Twitter or Farcaster.
  * @param cmd - Command line options including budget, platform, and contentId.
  */
-export async function createRewardAction(cmd: Command & CreateRewardOptions) {
+export async function createReward(cmd: CreateRewardOptions) {
   const privateKey = process.env.PRIVATE_KEY as Hex;
   const baseURL = "https://api.snack.money" as string;
   const endpointPath = "/rewards/create-distribution" as string;

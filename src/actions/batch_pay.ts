@@ -14,8 +14,8 @@ import { Logger } from "../helper/logger";
  */
 export async function batchPayAction(cmd: Command & BatchPayOptions) {
   const privateKey = process.env.PRIVATE_KEY as Hex;
-  const baseURL = process.env.RESOURCE_SERVER_URL as string;
-  const endpointPath = process.env.BATCH_ENDPOINT_PATH as string;
+  const baseURL = "https://api.snack.money" as string;
+  const endpointPath = "/payments/batch-pay" as string;
 
   if (!baseURL || !privateKey || !endpointPath) {
     Logger.error("Missing required environment variables");

@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { Hex } from "viem";
-import type { Command } from "commander";
 import { privateKeyToAccount } from "viem/accounts";
 import { withPaymentInterceptor, decodeXPaymentResponse } from "x402-axios";
 import type { PayOptions } from "../types";
@@ -12,7 +11,7 @@ import { Logger } from "../helper/logger";
  * @description - Sends a single USDC payment to a user on Twitter or Farcaster.
  * @param cmd - Command line options including identity, username, and amount.
  */
-export async function payAction(cmd: Command & PayOptions) {
+export async function pay(cmd: PayOptions) {
   const privateKey = process.env.PRIVATE_KEY as Hex;
   const baseURL = "https://api.snack.money" as string;
   const endpointPath = "/payments/pay" as string;

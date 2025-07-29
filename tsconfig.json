@@ -14,5 +14,13 @@
     "outDir": "./dist"
   },
   "include": ["bin/**/*", "src/**/*", ".env"],
-  "exclude": ["node_modules", "dist", "coverage", "scripts", "tests", "brew"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage",
+    "scripts",
+    "tests",
+    "brew",
+    "sample"
+  ]
 }

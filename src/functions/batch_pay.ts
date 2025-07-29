@@ -1,28 +1,27 @@
 import axios from "axios";
 import type { Hex } from "viem";
-import type { Command } from "commander";
 import { privateKeyToAccount } from "viem/accounts";
 import { withPaymentInterceptor, decodeXPaymentResponse } from "x402-axios";
-import type { PayOptions } from "../types";
+import type { BatchPayOptions } from "../types";
 import { Logger } from "../helper/logger";
 
 /**
- * payAction
+ * batchPayAction
  *
- * @description - Sends a single USDC payment to a user on Twitter or Farcaster.
- * @param cmd - Command line options including identity, username, and amount.
+ * @description Sends batch USDC payments to multiple users on Twitter or Farcaster.
+ * @param cmd - Command line options including identity and receivers JSON string.
  */
-export async function payAction(cmd: Command & PayOptions) {
+export async function batchPay(cmd: BatchPayOptions) {
   const privateKey = process.env.PRIVATE_KEY as Hex;
   const baseURL = "https://api.snack.money" as string;
-  const endpointPath = "/payments/pay" as string;
+  const endpointPath = "/payments/batch-pay" as string;
 
   if (!baseURL || !privateKey || !endpointPath) {
     Logger.error("Missing required environment variables");
     process.exit(1);
   }
 
-  const { identity, username, amount } = cmd;
+  const { identity, receivers } = cmd;
   const allowedIdentities = ["twitter", "farcaster"];
 
   if (!allowedIdentities.includes(identity.toLowerCase())) {
@@ -30,9 +29,18 @@ export async function payAction(cmd: Command & PayOptions) {
     process.exit(1);
   }
 
-  const parsedAmount = parseFloat(amount);
-  if (isNaN(parsedAmount)) {
-    Logger.error("Amount must be a valid number, e.g., 0.01");
+  let parsedReceivers;
+  try {
+    parsedReceivers = JSON.parse(receivers);
+    if (!Array.isArray(parsedReceivers)) {
+      throw new Error("Receivers must be an array");
+    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (e) {
+    Logger.error(
+      // eslint-disable-next-line prettier/prettier
+      'receivers must be a valid JSON array, e.g. \'[{"username":"jrsarath","name":"Sarath Singh","amount":0.5}]\''
+    );
     process.exit(1);
   }
 
@@ -41,12 +49,11 @@ export async function payAction(cmd: Command & PayOptions) {
 
   try {
     const response = await api.post(endpointPath, {
-      amount: parsedAmount,
       currency: "USDC",
       type: "social-network",
       sender_username: "snackmoney-agent-x402",
-      receiver_username: username,
       receiver_identity: identity,
+      receivers: parsedReceivers,
     });
 
     Logger.log("response", response.data);

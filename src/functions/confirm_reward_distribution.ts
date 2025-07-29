@@ -1,6 +1,5 @@
 import axios from "axios";
 import type { Hex } from "viem";
-import type { Command } from "commander";
 import { privateKeyToAccount } from "viem/accounts";
 import { withPaymentInterceptor } from "x402-axios";
 import type { ConfirmRewardOptions } from "../types";
@@ -12,7 +11,7 @@ import { Logger } from "../helper/logger";
  * @description - Confirms and executes a reward distribution order.
  * @param cmd - Command line options including orderId.
  */
-export async function confirmRewardAction(cmd: Command & ConfirmRewardOptions) {
+export async function confirmReward(cmd: ConfirmRewardOptions) {
   const privateKey = process.env.PRIVATE_KEY as Hex;
   const baseURL = "https://api.snack.money" as string;
   const endpointPath = "/rewards/confirm-distribution" as string;
