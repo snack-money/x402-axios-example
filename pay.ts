@@ -49,7 +49,7 @@ api
     receiver_identity: args.receiver_identity,
    })
   .then(response => {
-    console.log('response', response.data);
+    console.log('response', response.headers);
     const paymentResponse = decodeXPaymentResponse(response.headers["x-payment-response"]);
     console.log(paymentResponse);
   })

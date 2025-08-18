@@ -39,14 +39,19 @@ Send USDC to a single user via Twitter or Farcaster:
 yarn pay --receiver_identity <identity_type> --receiver_username <receiver_username> --amount <amount>
 ```
 
-* `<identity_type>`: Either `farcaster` or `twitter`
+* `<identity_type>`: Either `farcaster` or `twitter` or `domain`
 * `<receiver_username>`: Receiver’s username (e.g., `0xmesuthere`, `mesut`)
 * `<amount>`: Amount of USDC to send (e.g., `0.01`)
 
 ### Examples
 ```bash
 yarn pay --receiver_identity twitter --receiver_username 0xmesuthere --amount 0.01
+
 yarn pay --receiver_identity farcaster--receiver_username mesut --amount 0.01
+
+yarn pay --receiver_identity domain --receiver_username snack.money --amount 1
+
+yarn pay --receiver_identity email --receiver_username jrsarath@outlook.com --amount 0.01
 ```
 
 # Batch Payments
