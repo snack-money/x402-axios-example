@@ -13,10 +13,11 @@
     "lint:check": "eslint . --ext .ts"
   },
   "dependencies": {
+    "@coinbase/x402": "^0.5.1",
     "axios": "^1.7.9",
     "dotenv": "^16.5.0",
     "viem": "^2.23.1",
-    "x402-axios": "latest"
+    "x402-axios": "^0.5.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
