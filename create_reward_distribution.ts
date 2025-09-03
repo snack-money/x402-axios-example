@@ -38,13 +38,12 @@ if (isNaN(budget)) {
 const account = privateKeyToAccount(privateKey);
 const api = withPaymentInterceptor(
   axios.create({ baseURL }),
-  account,
+  account as never,
 );
 
 api
-  .post(endpointPath, {
+  .post(`/rewards/${args.platform}/create-distribution`, {
     "budget": budget,
-    "platform": args.platform,
     "content_id": args.content_id.toString()
 })
   .then(response => {
