@@ -36,17 +36,16 @@ if (isNaN(amount)) {
 const account = privateKeyToAccount(privateKey);
 const api = withPaymentInterceptor(
   axios.create({ baseURL }),
-  account,
+  account as never,
 );
 
 api
-  .post(endpointPath, { 
+  .post(`/payments/${args.receiver_identity}/pay`, { 
     amount,
     currency: "USDC",
     type: "social-network",
     sender_username: "snackmoney-agent-x402",
     receiver_username: args.receiver_username,
-    receiver_identity: args.receiver_identity,
    })
   .then(response => {
     console.log('response', response.headers);

@@ -43,16 +43,15 @@ try {
 const account = privateKeyToAccount(privateKey);
 const api = withPaymentInterceptor(
   axios.create({ baseURL }),
-  account,
+  account as never,
 );
 
 
 api
-  .post(endpointPath, { 
+  .post(`/payments/${args.receiver_identity}/batch-pay`, { 
     currency: "USDC",
     type: "social-network",
     sender_username: "snackmoney-agent-x402",
-    receiver_identity: args.receiver_identity,
     receivers,
    })
   .then(response => {

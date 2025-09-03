@@ -47,7 +47,7 @@ yarn pay --receiver_identity <identity_type> --receiver_username <receiver_usern
 ```bash
 yarn pay --receiver_identity twitter --receiver_username 0xmesuthere --amount 0.01
 
-yarn pay --receiver_identity farcaster--receiver_username mesut --amount 0.01
+yarn pay --receiver_identity farcaster --receiver_username mesut --amount 0.01
 
 yarn pay --receiver_identity domain --receiver_username snack.money --amount 1
 
