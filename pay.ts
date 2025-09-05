@@ -22,7 +22,7 @@ if (!args.receiver_identity || !args.receiver_username || !args.amount) {
 }
 
 // Input validations
-const allowedIdentities = ["twitter", "farcaster", "domain", "email"];
+const allowedIdentities = ["x", "farcaster", "web", "email"];
 if (!allowedIdentities.includes(args.receiver_identity.toLowerCase())) {
   console.error(`receiver_identity must be either ${allowedIdentities.map(i => `'${i}'`).join(" or ")}`);
   process.exit(1);

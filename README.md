@@ -1,6 +1,6 @@
 # 🍪 Snack Money API – x402 Example
 
-This repository contains example scripts that demonstrate how to use the **Snack Money API** to send **USDC** to any **Farcaster** or **Twitter** user — no wallet address required, thanks to the **x402 protocol**.
+This repository contains example scripts that demonstrate how to use the **Snack Money API** to send **USDC** to any **Farcaster** or **X** user — no wallet address required, thanks to the **x402 protocol**.
 
 
 ## Prerequisites
@@ -33,23 +33,23 @@ This repository contains example scripts that demonstrate how to use the **Snack
 # Single Account Payment
 
 ### Usage
-Send USDC to a single user via Twitter or Farcaster:
+Send USDC to a single user via X or Farcaster:
 
 ```bash
 yarn pay --receiver_identity <identity_type> --receiver_username <receiver_username> --amount <amount>
 ```
 
-* `<identity_type>`: Either `farcaster` or `twitter` or `domain`
+* `<identity_type>`: Either `farcaster` or `x` or `web`
 * `<receiver_username>`: Receiver’s username (e.g., `0xmesuthere`, `mesut`)
 * `<amount>`: Amount of USDC to send (e.g., `0.01`)
 
 ### Examples
 ```bash
-yarn pay --receiver_identity twitter --receiver_username 0xmesuthere --amount 0.01
+yarn pay --receiver_identity x --receiver_username 0xmesuthere --amount 0.01
 
 yarn pay --receiver_identity farcaster --receiver_username mesut --amount 0.01
 
-yarn pay --receiver_identity domain --receiver_username snack.money --amount 1
+yarn pay --receiver_identity web --receiver_username snack.money --amount 1
 
 yarn pay --receiver_identity email --receiver_username jrsarath@outlook.com --amount 0.01
 ```
@@ -63,7 +63,7 @@ Send USDC to multiple recipients in a single batch:
 yarn batch-pay --receiver_identity <identity_type> --receivers '<receivers_json>'
 ```
 
-* `<identity_type>`: `farcaster` or `twitter`
+* `<identity_type>`: `farcaster` or `x`
 * `<receivers_json>`: A **JSON array** of recipients containing `username` and `amount`
 
 ### Examples
@@ -71,7 +71,7 @@ yarn batch-pay --receiver_identity <identity_type> --receivers '<receivers_json>
 ```bash
 yarn batch-pay --receiver_identity farcaster --receivers '[{"username":"lincoln","amount":0.5},{"username":"mesut","amount":0.25}]'
 
-yarn batch-pay --receiver_identity twitter --receivers '[{"username":"MurrLincoln","amount":0.5},{"username":"0xmesuthere","amount":0.25}]'
+yarn batch-pay --receiver_identity x --receivers '[{"username":"MurrLincoln","amount":0.5},{"username":"0xmesuthere","amount":0.25}]'
 ```
 
 # Reward Distribution Creation
@@ -84,7 +84,7 @@ yarn create-reward-distribution --budget <budget> --platform <platform> --conten
 ```
 
 * `<budget>`: Amount of USDC to send (e.g., `10`)
-* `<platform>`: `farcaster` or `twitter`
+* `<platform>`: `farcaster` or `x`
 * `<content_id>`: The platform-provided **Content ID** associated with the content eligible for reward distribution.
 
 ### Examples

@@ -22,9 +22,9 @@ if (!args.receiver_identity || !args.receivers) {
 }
 
 // Input validations
-const allowedIdentities = ["twitter", "farcaster", "domain"];
+const allowedIdentities = ["x", "farcaster", "web"];
 if (!allowedIdentities.includes(args.receiver_identity.toLowerCase())) {
-  console.error("receiver_identity must be either 'twitter' or 'farcaster'");
+  console.error(`receiver_identity must be either ${allowedIdentities.map(i => `'${i}'`).join(" or ")}`);
   process.exit(1);
 }
 
